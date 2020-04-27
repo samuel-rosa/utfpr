@@ -1,0 +1,105 @@
+---
+title: "Nome da Disciplina"
+subtitle: "Título da aula"
+author: "Prof. Dr. Alessandro Samuel-Rosa [alessandrorosa@utfpr.edu.br]"
+date: "ano-mês-dia"
+output:
+  ioslides_presentation:
+    logo: logo.png
+    widescreen: true
+    css: styles.css
+bibliography: biblio.bib
+colorlinks: true
+nocite: |
+  @bibtexkey
+---
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('slide:not(.title-slide, .backdrop, .segue)').append('<footer></footer>');
+    $('footer').attr('label', 'Título da aula');
+  })
+</script>
+
+```{r, echo=FALSE, include=FALSE}
+source('helper.R')
+```
+
+# Assuntos gerais
+
+## Assuntos gerais
+
+* Item 1
+* Item 2
+* Item 3
+
+# Aula anterior
+
+## Título da aula anterior
+
+* Tópico 1
+* Tópico 2
+* Tópico 3
+
+# Aula de hoje
+
+## Título da aula de hoje | Sumário
+
+* Tópico 1
+* Tópico 2
+* Tópico 3
+
+## Título da aula de hoje | Objetivos
+
+* Tópico 1
+* Tópico 2
+
+## Título da aula de hoje | Bibliografia
+
+* Item 1
+* Item 2
+* Item 3
+
+# Slide de primeiro nível
+
+## Slide de segundo nível {.columns-2}
+
+<!-- ?presentme=true -->
+
+<div class="notes"><p style="font-size:16px">
+Add presenter notes to a slide.
+
+To enable presenter mode add ?presentme=true to the URL of the presentation.
+</p></div>
+
+<!-- ?presentme=true -->
+
+--- <!-- Slide sem título -->
+
+```{r, eval = FALSE}
+# Adicionar tabela
+tab()
+
+# Adicionar figura
+fig()
+```
+
+
+# Próxima aula
+
+## Título da próxima aula
+
+* Tópico 1
+* Tópico 2
+* Tópico 3
+
+## Manutenção de ensino
+
+* Item 1
+* Item 2
+* Item 3
+
+# Bibliografia
+
+## Bibliografia

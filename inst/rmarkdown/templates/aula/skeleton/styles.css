@@ -1,0 +1,53 @@
+.gdbar img {
+  width: 300px !important;
+  height: 110px !important;
+  margin: 10px 10px;
+}
+
+.gdbar {
+  width: 400px !important;
+  height: 130px !important;
+}
+
+slides > slide:not(.nobackground):before {
+  width: 150px;
+  height: 55px;
+  background-size: 150px 55px;
+}
+
+footer:after {
+  font-size: 12pt;
+  content: attr(label);
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align:center;
+  bottom: 20px;
+  line-height: 1.9;
+  display: block;
+}
+pre {
+  background-color: #e6e6e6; 
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 5px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 1.5em;
+}
+/* Size variants */
+article.tiny p, article.tiny ul, article.tiny ol {
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0;
+}
+.boxed {
+  border-style: solid;
+  border-color: black;
+  border-width: thin; 
+  background-color: lightgrey;
+  margin: 12px 12px 12px 12px;
+  padding: 6px 6px 6px 6px;
+} 

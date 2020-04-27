@@ -1,0 +1,6 @@
+^packrat/
+^\.Rprofile$
+^.*\.Rproj$
+^\.Rproj\.user$
+build-package.R
+packrat

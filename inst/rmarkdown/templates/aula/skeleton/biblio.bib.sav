@@ -1,0 +1,52 @@
+% Encoding: UTF-8
+@Article{Sturges1926,
+  author  = {Herbert A. Sturges},
+  title   = {The Choice of a Class Interval},
+  journal = {Journal of the American Statistical Association},
+  year    = {1926},
+  number  = {153},
+  pages   = {65--66},
+  url     = {https://www.jstor.org/stable/2965501},
+  volume  = {21}
+}
+@Book{MontgomeryEtAl2018,
+  author     = {Montgomery, Donald C. and Runger, George C.},
+  title      = {Estatística Aplicada e Probabilidade para Engenheiros},
+  year       = {2018},
+  translator = {Verônica Calado},
+  edition    = {6},
+  publisher  = {LTC},
+  location   = {Rio de Janeiro},
+  isbn       = {978-85-216-3253-5}
+}
+@Book{Everitt2006,
+  author    = {B. S. Everitt},
+  title     = {The {C}ambridge dictionary of statistics},
+  year      = {2006},
+  edition   = {3},
+  publisher = {Cambridge University Press},
+  pages     = {432},
+  address   = {Cambridge}
+}
+@Book{MorettinEtAl2017,
+  author    = {Morettin, Pedro Alberto and Bussab, Wilton {de} Oliveira},
+  title     = {Estatística Básica},
+  year      = {2017},
+  edition   = {9},
+  publisher = {Saraiva},
+  location  = {São Paulo},
+  isbn      = {9788547220228},
+  pages     = {554}
+}
+@Book{Dante2013a,
+  author    = {Luiz Roberto Dante},
+  title     = {Matemática : contexto \& aplicações},
+  year      = {2013},
+  volume    = {3},
+  edition   = {2},
+  publisher = {Ática},
+  location  = {São Paulo},
+  isbn      = {9788508163014}
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
