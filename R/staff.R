@@ -54,33 +54,3 @@ staff <-
     # Output
     writeLines(text = res, con = output)
   }
-
-# googlesheets4::sheets_deauth()
-# dados <- googlesheets4::read_sheet('1JY0z7fN6_CXGk4MId_k-vLvIUy4PzYb6BS1BevoOEMM', sheet = 'dados')
-# dados <- data.table::as.data.table(dados)
-
-# cabecalho <-
-#   paste(
-#     '<h3><b>Coordenação do Curso</b></h3>',
-#     '<p>',
-#     '<b>Coordenador: </b>', dados[gestao == 'Coordenador de Curso', prefix], ' ', dados[gestao == 'Coordenador de Curso', name], '<br/>',
-#     '<b>Coordenador substituto: </b>', dados[cargo == 'Coordenador Substituto de Curso', prefix], ' ', dados[cargo == 'Coordenador Substituto de Curso', name], '<br/>',
-#     '<b>Endereço:</b><br/>',
-#     'Universidade Tecnológica Federal do Paraná - Câmpus Santa Helena<br/>',
-#     'Prolongamento da Rua Cerejeira, Câmpus Universitário - Bloco J<br/>',
-#     'Santa Helena/PR - CEP 85892-000<br/>',
-#     '<b>phone:</b> (45) 3268-8818<br/>',
-#     '<b>E-mail:</b> coagr-sh@utfpr.edu.br',
-#     '</p>',
-#     '<p class=" "> </p>',
-#     '<p class=" "> </p>',
-#     sep = ''
-#   )
-
-# professores_inicio <-
-#   paste(
-#     '<h3><b>Professores do Curso</b></h3>',
-#     '<table class="plain">',
-#     '<tbody>',
-#     sep = ''
-#   )

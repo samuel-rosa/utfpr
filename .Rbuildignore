@@ -1,6 +1,8 @@
+^renv$
+^renv\.lock$
 ^packrat/
 ^\.Rprofile$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 build-package.R
-packrat
+README.Rmd
