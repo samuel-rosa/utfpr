@@ -8,8 +8,8 @@ staff(input, output = "output.html", ...)
 }
 \arguments{
 \item{input}{a character string naming file which the tabular data are to be read from using
-\code{\link[utils]{read.table}}. The following columns are mandatory: name, prefix, degree,
-education, interest, email, phone, homepage, lattes, and image.}
+\code{\link[utils]{read.table}}. The following columns are mandatory: "name", "prefix", "degree",
+"education", "interest", "email", "phone", "homepage", "lattes", and "image".}
 
 \item{output}{a character string naming a HTML file for writing using \code{\link[base]{writeLines}}.}
 
