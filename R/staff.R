@@ -34,7 +34,7 @@ staff <-
             '<td>',
               '<b>', x[i, "prefix"], " ", x[i, "degree"], " ", x[i, "name"], '</b><br/>',
               x[i, "education"], '<br/>',
-              '<b>Área de atuação:</b> ', x[i, "interest"], '<br/>',
+              '<b>Area de atuacao:</b> ', x[i, "interest"], '<br/>',
               '<b>E-mail: </b> <a class="email-link" href="mailto:', x[i, "email"],
                 '?subject=Contato" target="_blank" title="">', x[i, "email"], '</a><br/>',
               '<b>phone: </b> ', x[i, "phone"], '<br/>',
@@ -42,7 +42,7 @@ staff <-
                 paste('<b>Homepage: </b> <a class="external-link" href="', x[i, "homepage"],
                       '" target="_blank" title="">', x[i, "homepage"], '</a><br/>', sep = '')
               },
-              '<b>Currículo Lattes: </b> <a class="external-link" href="', x[i, "lattes"],
+              '<b>Curriculo Lattes: </b> <a class="external-link" href="', x[i, "lattes"],
                 '" target="_blank" title="">', x[i, "lattes"], '</a><br/>',
             '</td>',
           '</tr>'
