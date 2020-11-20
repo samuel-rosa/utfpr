@@ -1,3 +1,7 @@
+# utfpr 0.4.1
+
+* Minor improvement on table headers and captions.
+
 # utfpr 0.4.0
 
 * Rmarkdown template to create course matrix now generates new table.

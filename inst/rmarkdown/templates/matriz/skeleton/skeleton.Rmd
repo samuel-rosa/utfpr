@@ -12,6 +12,7 @@ pander::panderOptions("table.split.table", Inf)
 pander::panderOptions("table.split.cells", 50)
 pander::panderOptions("table.alignment.default", "left")
 pander::panderOptions("table.alignment.rownames", "left")
+pander::panderOptions("missing", "-")
 
 # Descarregar Google Spreadsheet com dados
 sheet_id <- "1PZtlSiQkQ5qf9kjIcT37MV9vMx3ssXF-dweaZnyZAGg"
@@ -101,10 +102,9 @@ idx <- match(c("Aula Presencial Teórica", "Aula Presencial Prática", "Aula Nã
 tabela <- tabela[, -idx]
 for (i in 1:nrow(tabela)) {
   pander::pandoc.table(
-    data.frame(t(tabela[i, ])), 
-    caption = paste0("**Quadro ...** - Descrição da unidade curricular ", 
-                     tabela[["Nome da unidade curricular"]][i], "."),
-    col.names = "")
+    t(tabela[i, ]), col.names = NULL, caption = paste0(
+      "**Quadro ...** - Informações fundamentais da unidade curricular obrigatória ",
+      tabela[["Nome da unidade curricular"]][i], ", ofertada no ", periodo_nome[p], " período do Curso."))
 }
 ```
 

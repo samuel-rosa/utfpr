@@ -1,7 +1,7 @@
 Package: utfpr
 Type: Package
 Title: Federal University of Technology - Paraná
-Version: 0.4.0
+Version: 0.4.1
 Date: 2020-11-20
 Author: person("Alessandro", "Samuel-Rosa", role = c("aut", "cre"), email = "alessandrosamuelrosa@gmail.com", 
         comment = c(ORCID = "0000-0003-0877-1320"))
