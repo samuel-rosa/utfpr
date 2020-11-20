@@ -1,3 +1,7 @@
+# utfpr 0.4.0
+
+* Rmarkdown template to create course matrix now generates new table.
+
 # utfpr 0.3.0
 
 * Adds rmarkdown template to create course matrix.

@@ -9,23 +9,39 @@ output:
 # Configuração geral
 knitr::opts_chunk$set(echo = FALSE)
 pander::panderOptions("table.split.table", Inf)
+pander::panderOptions("table.split.cells", 50)
 pander::panderOptions("table.alignment.default", "left")
+pander::panderOptions("table.alignment.rownames", "left")
 
-# Google Spreadsheet com dados 
+# Descarregar Google Spreadsheet com dados
 sheet_id <- "1PZtlSiQkQ5qf9kjIcT37MV9vMx3ssXF-dweaZnyZAGg"
 sheet_name <- "dados"
 matriz <- paste0("https://docs.google.com/spreadsheets/d/", sheet_id, "/gviz/tq?tqx=out:csv&sheet=", sheet_name)
 matriz <- utils::read.table(
   file = matriz, sep = ",", header = TRUE, stringsAsFactors = FALSE, check.names = FALSE)
 
+# Identificar pré-requisitos
+idx <- match(matriz[, "Pré-requisitos"], matriz[, "Código da unidade curricular"])
+matriz[, "Pré-requisitos"] <- matriz[, "Nome da unidade curricular"][idx]
+
+# Ordenar linhas por período, área de conhecimento e unidade curricular
+idx <- order(matriz[["Período"]], matriz[["Área de conhecimento"]], matriz[["Nome da unidade curricular"]])
+matriz <- matriz[idx, ]
+
 # Formatação dos nomes das colunas das tabelas
-cols1 <- c("Área de conhecimento", "Unidade curricular", "Extensionista", "Aula Presencial Teórica",
-          "Aula Presencial Prática", "Aula Não Presencial Teórica", "Aula Não Presencial Prática", "Total")
-cols1_names <- c("Área", "UC", "Ext", "P/T", "P/P", "NP/T", "NP/P", "Total")
+cols1 <- c("Área de conhecimento",
+           "Nome da unidade curricular",
+           "Unidade curricular de caráter extensionista",
+           "Aula Presencial Teórica",
+           "Aula Presencial Prática",
+           "Aula Não Presencial Teórica", 
+           "Aula Não Presencial Prática",
+           "Carga horária total da unidade curricular")
+cols1_names <- c("Área de conhecimento", "Unidade Curricular", "Ext", "P/T", "P/P", "NP/T", "NP/P", "Total")
 cols1_names <- paste0("**", cols1_names, "**")
 
 # Nome de cada período do curso
-periodo_nome <- 
+periodo_nome <-
   c("primeiro", "segundo", "terceiro", "quarto", "quinto", "sexto", "sétimo", "oitavo", "nono", "décimo")
 
 # Função para gerar tabela 1
@@ -33,10 +49,10 @@ tabela1 <- function (matriz, periodo) {
   t <- matriz[matriz$`Período` == p & !is.na(matriz$`Período`), cols1]
   t <- rbind(
   t,
-  c("**Carga horária total**", rep("", length(cols1) - 2), sum(t$Total)),
-  c("**Carga horária extensionista**", rep("", length(cols1) - 2), sum(t$Total[t$Extensionista == "Sim"])))
+  c("**Carga Horária total do período**", rep("", length(cols1) - 2), sum(t$Total)),
+  c("**Carga Horária total de extensão**", rep("", length(cols1) - 2), sum(t$Total[t$Extensionista == "Sim"])))
   pander::pandoc.table(
-    t = t, row.names = FALSE, col.names = cols1_names, 
+    t = t, row.names = FALSE, col.names = cols1_names,
     caption = paste0("**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não presencial teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) do ", periodo_nome[p], " período do Curso."))
 }
 ```
@@ -53,6 +69,43 @@ As unidades curriculares do `r periodo_nome[p]` período do Curso estão dispost
 
 ```{r, results='asis'}
 tabela1(matriz = matriz, periodo = p)
+```
+
+```{r, results='asis'}
+cols <- c("Nome da unidade curricular",
+          "Área de conhecimento",
+          "Código da unidade curricular",
+          "Modalidade da unidade curricular",
+          "Idioma da unidade curricular",
+          "Pré-requisitos",
+          "Carga horária presencial (h)",
+          "Aula Presencial Teórica",
+          "Aula Presencial Prática",
+          "Carga horária não presencial (h)",
+          "Aula Não Presencial Teórica",
+          "Aula Não Presencial Prática",
+          "Carga horária total da unidade curricular",
+          "Carga horária destinada a APCC (h) nessa unidade curricular",
+          "Ementa")
+tabela <- matriz[matriz$`Período` == p & !is.na(matriz$`Período`), cols]
+tabela[["Carga horária presencial (h)"]] <- 
+  paste0("Teórica: ", tabela[["Aula Presencial Teórica"]],
+         "\tPrática: ", tabela[["Aula Presencial Prática"]],
+         "\tTotal: ", tabela[["Carga horária presencial (h)"]])
+tabela[["Carga horária não presencial (h)"]] <- 
+  paste0("Teórica: ", tabela[["Aula Não Presencial Teórica"]],
+         "\tPrática: ", tabela[["Aula Não Presencial Prática"]],
+         "\tTotal: ", tabela[["Carga horária não presencial (h)"]])
+idx <- match(c("Aula Presencial Teórica", "Aula Presencial Prática", "Aula Não Presencial Teórica",
+               "Aula Não Presencial Prática"), colnames(tabela))
+tabela <- tabela[, -idx]
+for (i in 1:nrow(tabela)) {
+  pander::pandoc.table(
+    data.frame(t(tabela[i, ])), 
+    caption = paste0("**Quadro ...** - Descrição da unidade curricular ", 
+                     tabela[["Nome da unidade curricular"]][i], "."),
+    col.names = "")
+}
 ```
 
 ### 5.3.2 Segundo período
