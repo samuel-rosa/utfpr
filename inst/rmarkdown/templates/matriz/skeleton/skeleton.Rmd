@@ -27,8 +27,8 @@ idx <- match(matriz[, "Pré-requisitos"], matriz[, "Código da unidade curricula
 matriz[, "Pré-requisitos"] <- matriz[, "Nome da unidade curricular"][idx]
 
 # Ordenar linhas por período, área de conhecimento e unidade curricular
-idx <- order(matriz[["Período"]], matriz[["Área de conhecimento"]], matriz[["Nome da unidade curricular"]])
-matriz <- matriz[idx, ]
+# idx <- order(matriz[["Período"]], matriz[["Área de conhecimento"]], matriz[["Nome da unidade curricular"]])
+# matriz <- matriz[idx, ]
 
 # Formatação dos nomes das colunas das tabelas
 periodo_cols <- c("Área de conhecimento",
@@ -51,52 +51,56 @@ nome_periodo <-
 
 ```{r}
 # FUNÇÃO PARA GERAR TABELAS COM TODAS AS UNIDADES CURRICULARES OBRIGATÓRIAS E OPTATIVAS DE DETERMINADO PERÍODO
-# 
 # matriz: tabela de dados
 # periodo: número do período
 # optativas: gerar tabela das unidades curriculares optativas?
 tabela_periodo <- 
   function (matriz, periodo, optativas = FALSE) {
-  if (optativas) {
-    status <- "optativas"
-    t <- matriz[
-      { 
-        p >= matriz[["Período"]]
-      } & { 
-        p <= matriz[["Período máximo"]]
-      } & { 
-        !is.na(matriz[["Período"]]) 
-      } & { 
-        matriz[["Status"]] == "Optativa" 
-      }, periodo_cols]
-  } else {
-    status <- "obrigatórias"
-    t <- matriz[
-      {
-        matriz[["Período"]] == p
-      } & {
-        !is.na(matriz[["Período"]]) 
-      } & {
-        matriz[["Status"]] == "Obrigatória"
-      }, periodo_cols]
-    opt <- startsWith(t[["Nome da unidade curricular"]], "Optativa")
-    aula <- startsWith(colnames(t), "Aula")
-    t[opt, aula] <- matrix(rep("-", sum(opt) * sum(aula)), nrow = sum(opt))
+    if (optativas) { # Filtrar unidades curriculares optativas
+      t <- matriz[
+        { 
+          max(periodo) >= matriz[["Período"]]
+        } & { 
+          min(periodo) <= matriz[["Período máximo"]]
+        } & { 
+          !is.na(matriz[["Período"]]) 
+        } & { 
+          matriz[["Status"]] == "Optativa" 
+        }, periodo_cols]
+      caption <- 
+        paste0("**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não presencial ",
+               "teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) optativas ofertadas no ",
+               ifelse(length(periodo) == 1, paste0(nome_periodo[periodo], " período do "), ""), "Curso.")
+    } else { # Filtrar unidades curriculares obrigatórias
+      t <- matriz[
+        {
+          matriz[["Período"]] == periodo
+        } & {
+          !is.na(matriz[["Período"]]) 
+        } & {
+          matriz[["Status"]] == "Obrigatória"
+        }, periodo_cols]
+      opt <- startsWith(t[["Nome da unidade curricular"]], "Optativa")
+      aula <- startsWith(colnames(t), "Aula")
+      t[opt, aula] <- matrix(rep("-", sum(opt) * sum(aula)), nrow = sum(opt))
+      caption <- 
+        paste0("**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não ",
+               "presencial teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) obrigatórias ",
+               "que compõem o ", nome_periodo[periodo], " período do Curso.")
+    }
+    # Ordenar unidades curriculares por área do conhecimento
+    t <- t[order(t[["Área de conhecimento"]], t[["Nome da unidade curricular"]]), ]
+    # Computar cargas horárias totais
+    t <- rbind(
+      t,
+      c("**Carga horária total**", rep("", length(periodo_cols) - 3),
+        sum(t[, "Carga horária total da unidade curricular"]), ""),
+      c("**Carga horária de extensão**", rep("", length(periodo_cols) - 3),
+        sum(t[t[, "Unidade curricular de caráter extensionista"] == "Sim", 
+              "Carga horária total da unidade curricular"]), ""))
+    # Criar tabela
+    pander::pandoc.table(t = t, row.names = FALSE, col.names = cols1_names, caption = caption)
   }
-  t <- rbind(
-    t,
-    c("**Carga horária total do período**", rep("", length(periodo_cols) - 3),
-      sum(t[, "Carga horária total da unidade curricular"]), ""),
-    c("**Carga horária total de extensão**", rep("", length(periodo_cols) - 3),
-      sum(t$Total[t$Extensionista == "Sim"]), ""))
-  pander::pandoc.table(
-    t = t, row.names = FALSE, col.names = cols1_names, 
-    caption = 
-      paste0("**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não ",
-             "presencial teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) **", status, "** ",
-             "ofertadas no ", nome_periodo[p], " período do Curso.")
-  )
-}
 ```
 
 ```{r}
@@ -123,10 +127,11 @@ tabela_unidades_curriculares <-
               "Carga horária destinada a APCC (h) nessa unidade curricular",
               "Ementa")
     if (optativas) {
-      status <- "optativa"
       tabela <- matriz[
         {
-          matriz[["Período"]] == p
+          max(periodo) >= matriz[["Período"]]
+        } & { 
+          min(periodo) <= matriz[["Período máximo"]]
         } & {
           !is.na(matriz[["Período"]])
         } & {
@@ -138,10 +143,9 @@ tabela_unidades_curriculares <-
         },
         cols]
     } else {
-      status <- "obrigatória"
       tabela <- matriz[
         {
-          matriz[["Período"]] == p
+          matriz[["Período"]] == periodo
         } & {
           !is.na(matriz[["Período"]])
         } & {
@@ -164,12 +168,24 @@ tabela_unidades_curriculares <-
     idx <- match(c("Aula Presencial Teórica", "Aula Presencial Prática", "Aula Não Presencial Teórica",
                    "Aula Não Presencial Prática"), colnames(tabela))
     tabela <- tabela[, -idx]
-   for (i in 1:nrow(tabela)) {
-     pander::pandoc.table(
-       t(tabela[i, ]), col.names = NULL, caption = paste0(
-         "**Quadro ...** - Informações fundamentais da unidade curricular **", status, "** ",
-         tabela[["Nome da unidade curricular"]][i], ", ofertada no ", nome_periodo[p], " período do Curso."))
-     }
+    for (i in 1:nrow(tabela)) {
+      if (optativas) {
+        caption <-
+          paste0(
+            "**Quadro ...** - Informações fundamentais da unidade curricular optativa ",
+            tabela[["Nome da unidade curricular"]][i],
+            ifelse(
+              length(periodo) == 1, paste0(", ofertada no ", nome_periodo[periodo], " período do Curso."),
+              "."))
+      } else {
+        caption <-
+          paste0(
+            "**Quadro ...** - Informações fundamentais da unidade curricular obrigatória ",
+            tabela[["Nome da unidade curricular"]][i], ", ofertada no ", nome_periodo[periodo],
+            " período do Curso.")
+      }
+      pander::pandoc.table(t(tabela[i, ]), col.names = NULL, caption = caption)
+    }
   }
 ```
 
@@ -376,3 +392,25 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.11 Unidades curriculares optativas
+
+As unidades curriculares optativas ofertadas no Curso estão dispostas nos quadros abaixos.
+
+```{r, results='asis'}
+tabela_periodo(matriz = matriz, periodo = c(1:10), optativas = TRUE)
+```
+
+```{r, echo=FALSE}
+cols <- c("Área de conhecimento", "Carga horária total da unidade curricular")
+tabela <- matriz[matriz[["Status"]] == "Optativa", cols]
+tabela <- split(tabela[["Carga horária total da unidade curricular"]], tabela[["Área de conhecimento"]])
+tabela <- sapply(tabela, sum)
+png("carga-horaria-optativas-area-conhecimento.png", width = 480 * 2, height = 480 * 2, res = 72 * 2)
+par(mar = c(5, 10, 4, 2) + 0.1)
+barplot(tabela, horiz = TRUE, las = 1, xlab = "Horas")
+dev.off()
+knitr::include_graphics("carga-horaria-optativas-area-conhecimento.png")
+```
+
+```{r, results='asis'}
+tabela_unidades_curriculares(matriz = matriz, periodo = c(1:10), optativas = TRUE)
+```
