@@ -41,12 +41,14 @@ periodo_cols <- c("Área de conhecimento",
                   "Carga horária total da unidade curricular",
                   "Carga horária destinada a APCC (h) nessa unidade curricular")
 cols1_names <-
-  c("Área de conhecimento", "Unidade curricular", "Ext", "P/T", "P/P", "NP/T", "NP/P", "Total", "APCC")
+  c("Área de conhecimento", "Unidade curricular", "Ext", "P/T", "P/P", "NP/T", "NP/P", "Total",
+    "APCC")
 cols1_names <- paste0("**", cols1_names, "**")
 
 # Nome de cada período do curso
 nome_periodo <-
-  c("primeiro", "segundo", "terceiro", "quarto", "quinto", "sexto", "sétimo", "oitavo", "nono", "décimo")
+  c("primeiro", "segundo", "terceiro", "quarto", "quinto", "sexto", "sétimo", "oitavo", "nono",
+    "décimo")
 ```
 
 ```{r}
@@ -68,9 +70,12 @@ tabela_periodo <-
           matriz[["Status"]] == "Optativa" 
         }, periodo_cols]
       caption <- 
-        paste0("**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não presencial ",
-               "teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) optativas ofertadas no ",
-               ifelse(length(periodo) == 1, paste0(nome_periodo[periodo], " período do "), ""), "Curso.")
+        paste0(
+          "**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não ",
+          "presencial teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) optativas ",
+          "ofertadas no", 
+          ifelse(length(periodo) == 1, paste0(nome_periodo[periodo], " período do "), ""),
+          "Curso.")
     } else { # Filtrar unidades curriculares obrigatórias
       t <- matriz[
         {
@@ -84,9 +89,10 @@ tabela_periodo <-
       aula <- startsWith(colnames(t), "Aula")
       t[opt, aula] <- matrix(rep("-", sum(opt) * sum(aula)), nrow = sum(opt))
       caption <- 
-        paste0("**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não ",
-               "presencial teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) obrigatórias ",
-               "que compõem o ", nome_periodo[periodo], " período do Curso.")
+        paste0(
+          "**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não ",
+          "presencial teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) obrigatórias ",
+          "que compõem o ", nome_periodo[periodo], " período do Curso.")
     }
     # Ordenar unidades curriculares por área do conhecimento
     t <- t[order(t[["Área de conhecimento"]], t[["Nome da unidade curricular"]]), ]
@@ -165,8 +171,9 @@ tabela_unidades_curriculares <-
       paste0("Teórica: ", tabela[["Aula Não Presencial Teórica"]],
              "\tPrática: ", tabela[["Aula Não Presencial Prática"]],
              "\tTotal: ", tabela[["Carga horária não presencial (h)"]])
-    idx <- match(c("Aula Presencial Teórica", "Aula Presencial Prática", "Aula Não Presencial Teórica",
-                   "Aula Não Presencial Prática"), colnames(tabela))
+    idx <- match(
+      c("Aula Presencial Teórica", "Aula Presencial Prática", "Aula Não Presencial Teórica",
+        "Aula Não Presencial Prática"), colnames(tabela))
     tabela <- tabela[, -idx]
     for (i in 1:nrow(tabela)) {
       if (optativas) {
@@ -175,7 +182,8 @@ tabela_unidades_curriculares <-
             "**Quadro ...** - Informações fundamentais da unidade curricular optativa ",
             tabela[["Nome da unidade curricular"]][i],
             ifelse(
-              length(periodo) == 1, paste0(", ofertada no ", nome_periodo[periodo], " período do Curso."),
+              length(periodo) == 1, 
+              paste0(", ofertada no ", nome_periodo[periodo]," período do Curso."),
               "."))
       } else {
         caption <-
