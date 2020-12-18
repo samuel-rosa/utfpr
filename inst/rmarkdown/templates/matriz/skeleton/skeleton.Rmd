@@ -5,6 +5,8 @@ output:
     reference_docx: template.docx
 ---
 
+<!-- Documentos: https://nuvem.utfpr.edu.br/index.php/s/7qQNM3OOQ6qpR76 -->
+
 ```{r setup, include=FALSE}
 # Configuração geral
 knitr::opts_chunk$set(echo = FALSE)
@@ -31,15 +33,16 @@ matriz[, "Pré-requisitos"] <- matriz[, "Nome da unidade curricular"][idx]
 # matriz <- matriz[idx, ]
 
 # Formatação dos nomes das colunas das tabelas
-periodo_cols <- c("Área de conhecimento",
-                  "Nome da unidade curricular",
-                  "Unidade curricular de caráter extensionista",
-                  "Aula Presencial Teórica",
-                  "Aula Presencial Prática",
-                  "Aula Não Presencial Teórica",
-                  "Aula Não Presencial Prática",
-                  "Carga horária total da unidade curricular",
-                  "Carga horária destinada a APCC (h) nessa unidade curricular")
+periodo_cols <- 
+  c("Área de conhecimento",
+    "Nome da unidade curricular",
+    "Unidade curricular de caráter extensionista",
+    "Aula Presencial Teórica",
+    "Aula Presencial Prática",
+    "Aula Não Presencial Teórica",
+    "Aula Não Presencial Prática",
+    "Carga horária total da unidade curricular",
+    "Carga horária destinada a APCC (h) nessa unidade curricular")
 cols1_names <-
   c("Área de conhecimento", "Unidade curricular", "Ext", "P/T", "P/P", "NP/T", "NP/P", "Total",
     "APCC")
@@ -49,9 +52,7 @@ cols1_names <- paste0("**", cols1_names, "**")
 nome_periodo <-
   c("primeiro", "segundo", "terceiro", "quarto", "quinto", "sexto", "sétimo", "oitavo", "nono",
     "décimo")
-```
 
-```{r}
 # FUNÇÃO PARA GERAR TABELAS COM TODAS AS UNIDADES CURRICULARES OBRIGATÓRIAS E OPTATIVAS DE DETERMINADO PERÍODO
 # matriz: tabela de dados
 # periodo: número do período
@@ -73,7 +74,7 @@ tabela_periodo <-
         paste0(
           "**Quadro ...** - Carga horária presencial teórica (P/T) e prática (P/P) e não ",
           "presencial teórica (NP/T) e prática (NP/P) das unidades curriculares (UC) optativas ",
-          "ofertadas no", 
+          "ofertadas no ", 
           ifelse(length(periodo) == 1, paste0(nome_periodo[periodo], " período do "), ""),
           "Curso.")
     } else { # Filtrar unidades curriculares obrigatórias
@@ -105,17 +106,18 @@ tabela_periodo <-
         sum(t[t[, "Unidade curricular de caráter extensionista"] == "Sim", 
               "Carga horária total da unidade curricular"]), ""))
     # Criar tabela
-    pander::pandoc.table(t = t, row.names = FALSE, col.names = cols1_names, caption = caption)
+    if (nrow(t) > 2) {
+      pander::pandoc.table(t = t, row.names = FALSE, col.names = cols1_names, caption = caption)
+    }
   }
-```
 
-```{r}
-# FUNÇÃO PARA GERAR TABELA DE CADA UNIDADE CURRICULARE OBRIGATÓRIA OU OPTATIVA DE DETERMINADO PERÍODO LETIVO
+# FUNÇÃO PARA GERAR TABELA DE CADA UNIDADE CURRICULARE OBRIGATÓRIA OU OPTATIVA DE DETERMINADO
+# PERÍODO LETIVO
 # 
 # matriz: tabela de dados
 # periodo: número do período
 # optativas: gerar tabela das unidades curriculares optativas?
-tabela_unidades_curriculares <-
+tabela_unidade_curricular <-
   function (matriz, periodo, optativas = FALSE) {
     cols <- c("Nome da unidade curricular",
               "Área de conhecimento",
@@ -205,18 +207,12 @@ tabela_unidades_curriculares <-
 p <- 1
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
-# tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.2 Segundo período
@@ -225,18 +221,12 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 2
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.3 Terceiro período
@@ -245,18 +235,12 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 3
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.4 Quarto período
@@ -265,18 +249,12 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 4
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.3 Quinto período
@@ -285,18 +263,12 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 5
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.6 Sexto período
@@ -305,18 +277,12 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 6
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.7 Sétimo período
@@ -325,18 +291,12 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 7
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.8 Oitavo período
@@ -345,18 +305,12 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 8
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.9 Nono período
@@ -365,18 +319,12 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 9
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.10 Décimo período
@@ -385,40 +333,112 @@ tabela_unidades_curriculares(matriz = matriz, periodo = p)
 p <- 10
 ```
 
-As unidades curriculares obrigatórias e optativas ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
+As unidades curriculares ofertadas no `r nome_periodo[p]` período do Curso estão dispostas nos quadros abaixos.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = p)
-```
-
-```{r, results='asis'}
-# tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
-```
-
-```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = p)
+tabela_periodo(matriz = matriz, periodo = p, optativas = TRUE)
+tabela_unidade_curricular(matriz = matriz, periodo = p)
 ```
 
 ### 5.3.11 Unidades curriculares optativas
 
-As unidades curriculares optativas ofertadas no Curso estão dispostas nos quadros abaixos.
+As unidades curriculares optativas ofertadas no Curso estão dispostas nos quadros abaixo.
 
 ```{r, results='asis'}
 tabela_periodo(matriz = matriz, periodo = c(1:10), optativas = TRUE)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 cols <- c("Área de conhecimento", "Carga horária total da unidade curricular")
 tabela <- matriz[matriz[["Status"]] == "Optativa", cols]
-tabela <- split(tabela[["Carga horária total da unidade curricular"]], tabela[["Área de conhecimento"]])
+tabela <- split(
+  tabela[["Carga horária total da unidade curricular"]], tabela[["Área de conhecimento"]])
 tabela <- sapply(tabela, sum)
-png("carga-horaria-optativas-area-conhecimento.png", width = 480 * 2, height = 480 * 2, res = 72 * 2)
-par(mar = c(5, 10, 4, 2) + 0.1)
-barplot(tabela, horiz = TRUE, las = 1, xlab = "Horas")
+names(tabela) <- gsub("Ciclo Humanidades - ", "", names(tabela))
+names(tabela) <- gsub(" e qualidade de vida", "\ne qualidade de vida", names(tabela))
+png(filename = "carga-horaria-optativas-area-conhecimento.png",
+    width = 480 * 3, height = 480 * 2, res = 72 * 2)
+par(mar = c(5, 11, 4, 1) + 0.1)
+barplot(tabela, horiz = TRUE, las = 1, xlab = "Horas", xlim = c(0, 400))
+grid(nx = NULL, ny = NA)
+barplot(tabela, horiz = TRUE, las = 1, xlab = "Horas", xlim = c(0, 400), add = TRUE)
+box()
 dev.off()
+```
+
+```{r, fig.cap="Figura ... - Distribuição da carga horária das unidades curriculares optativas ofertadas entre as áreas de conhecimento do Curso."}
 knitr::include_graphics("carga-horaria-optativas-area-conhecimento.png")
 ```
 
 ```{r, results='asis'}
-tabela_unidades_curriculares(matriz = matriz, periodo = c(1:10), optativas = TRUE)
+tabela_unidade_curricular(matriz = matriz, periodo = c(1:10), optativas = TRUE)
+```
+
+### 5.3.12 Unidades curriculares por área do curso
+
+A distribuição das unidades curriculares ofertadas por área de conhecimento do Curso, exceto aquelas das áreas do Ciclo de Humanidades, é apresentada no quadro a seguir.
+
+```{r, results='asis'}
+cols <- c("Área de conhecimento", "Nome da unidade curricular",
+          "Carga horária total da unidade curricular", "Status")
+t <- matriz[, cols]
+t <- t[order(t[["Área de conhecimento"]]), ]
+idx <- t[["Área de conhecimento"]] %in%
+  c("Atividades Complementares",
+    "Ciclo Humanidades",
+    "Ciclo Humanidades - Atividade física, saúde e qualidade de vida",
+    "Ciclo Humanidades - Ciências humanas",
+    "Ciclo Humanidades - Ciências sociais aplicadas",
+    "Ciclo Humanidades - Linguística, letras e artes",
+    "Estágio e Trabalho de Conclusão de Curso",
+    "Optativa Profissionalizante",
+    ""
+    )
+t <- t[!idx, ]
+t <- split(t, t[["Área de conhecimento"]])
+t <- lapply(t, function(x) {
+  rbind(
+    x[x[["Status"]] == "Obrigatória", ],
+    c(x[["Área de conhecimento"]][1], "Optativas", 
+      sum(x[x[["Status"]] == "Optativa", "Carga horária total da unidade curricular"]),
+      "Optativa")
+  )
+})
+t <- do.call(rbind, t)
+t[["Carga horária total da unidade curricular"]] <- 
+  as.integer(t[["Carga horária total da unidade curricular"]])
+col_names <- c("Área de conhecimento", "Unidade curricular", "Carga horária (h)")
+col_names <- paste0("**", col_names, "**")
+pander::pandoc.table(
+  t = t[, -ncol(t)], row.names = FALSE, col.names = col_names)
+```
+
+```{r}
+contagem <- 
+  t[t[["Status"]] == "Optativa", 
+    c("Área de conhecimento", "Carga horária total da unidade curricular")]
+obrigatoria <- split(t[["Carga horária total da unidade curricular"]], t[["Área de conhecimento"]])
+contagem$obrigatoria <- sapply(obrigatoria, sum)
+rownames(contagem) <- NULL
+colnames(contagem) <- c("Area", "Optativa", "Obrigatoria")
+```
+
+```{r, include=FALSE}
+png(filename = "carga-horaria-obrigatorias-optativas-area-conhecimento.png",
+    width = 480 * 3, height = 480 * 2, res = 72 * 2)
+par(mar = c(5, 11, 4, 1) + 0.1)
+barplot(
+  cbind(Obrigatoria, Optativa) ~ Area, data = contagem,
+  horiz = TRUE, las = 1, xlab = "Horas", ylab = "", xlim = c(0, 1300))
+grid(nx = NULL, ny = NA)
+barplot(
+  cbind(Obrigatoria, Optativa) ~ Area, data = contagem,
+  horiz = TRUE, las = 1, xlab = "Horas", ylab = "", xlim = c(0, 1300), add = TRUE)
+box()
+dev.off()
+```
+
+```{r, fig.cap="Figura ... - Distribuição da carga horária das unidades curriculares obrigatórias e optativas ofertadas entre as áreas de conhecimento do Curso (exceto Ciclo de Humanidades)."}
+knitr::include_graphics("carga-horaria-obrigatorias-optativas-area-conhecimento.png")
 ```
