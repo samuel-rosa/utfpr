@@ -1,0 +1,35 @@
+---
+title: "Qual é o Título de seu Relatório de Atividades?"
+author: "Qual é o seu Nome?"
+date: "`r Sys.Date()`"
+bibliography: biblio.bib
+csl: associacao-brasileira-de-normas-tecnicas.csl
+output: html_document
+---
+
+## Introdução
+
+Introduza o tema de seu relatório.
+
+
+## Material e Métodos
+
+Descreva o material e os métodos utilizados na atividade.
+
+
+## Resultados
+
+Apresente os resultados obtidos na atividade.
+
+
+## Discussão
+
+Discuta os resultados obtidos na atividade.
+
+
+## Conclusões
+
+Liste as conclusões resultantes da atividade.
+
+
+## Referências
