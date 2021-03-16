@@ -1,43 +1,56 @@
 ---
 title: "Qual é o Título de seu Relatório de Atividades?"
+subtitle: "Qual é o Subtítulo de seu Relatório de Atividades?"
 author: "Qual é o seu Nome?"
-date: "`r Sys.Date()`"
-bibliography: biblio.bib
-csl: associacao-brasileira-de-normas-tecnicas.csl
+abstract: "Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades. Descreva brevemente o conteúdo de seu relatório de atividades."
+
+# SOMENTE EDITE AS LINHAS ABAIXO SE TIVER CERTEZA DO QUE ESTÁ FAZENDO ##############################
 output:
   pdf_document:
     includes:
-      in_header: preamble.tex
+      in_header: tex/preamble.tex
+csl: bib/associacao-brasileira-de-normas-tecnicas.csl
+bibliography: bib/biblio.bib
+date: "`r Sys.Date()`"
 ---
+<!-- EDITE AS LINHAS ABAIXO CONFORME JULGAR NECESSÁRIO ##########################################-->
 
-## Antes de começar...
+## Antes de começar... 
 
 Familiarize-se com a sintaxe R/Markdown [@XieEtAl2020] e o motor knitr [@Xie2015] de geração de documentos dinâmicos no R [@RCoreTeam2020].
 
+Você também deve instalar o TinyTeX, programa responsável pela geração da versão PDF de seu relatório [@Xie2019]. Para isso, execute os comandos abaixo no console do R:
+
+    install.packages("tinytex")
+    tinytex::install_tinytex()
 
 ## Introdução
 
-Introduza o tema de seu relatório.
+Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório.
 
 
 ## Material e Métodos
 
-Descreva o material e os métodos utilizados na atividade.
+Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade.
 
 
 ## Resultados
 
-Apresente os resultados obtidos na atividade.
+Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade.
 
 
 ## Discussão
 
-Discuta os resultados obtidos na atividade.
+Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade.
 
 
 ## Conclusões
 
-Liste as conclusões resultantes da atividade.
+* Liste as conclusões resultantes da atividade.
+* Liste as conclusões resultantes da atividade.
+* Liste as conclusões resultantes da atividade.
 
 
 ## Referências
+
+Não se preocupe: sua lista de referências será gerada automaticamente!
