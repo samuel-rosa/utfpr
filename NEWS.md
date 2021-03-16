@@ -1,4 +1,4 @@
-# utfpr 0.5.0
+# utfpr 0.5.1
 
 * Rmarkdown template to create reports.
 
