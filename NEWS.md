@@ -1,3 +1,7 @@
+# utfpr 0.5.0
+
+* Rmarkdown template to create reports.
+
 # utfpr 0.4.1
 
 * Minor improvement on table headers and captions.
