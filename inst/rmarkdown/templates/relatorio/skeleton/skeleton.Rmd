@@ -6,7 +6,6 @@ bibliography: biblio.bib
 csl: associacao-brasileira-de-normas-tecnicas.csl
 output:
   pdf_document:
-    toc: true
     includes:
       in_header: preamble.tex
 ---
