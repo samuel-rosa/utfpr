@@ -1,6 +1,14 @@
+# utfpr 0.5.2
+
+* Improves documentation of RMarkdown template to create reports.
+
 # utfpr 0.5.1
 
-* Rmarkdown template to create reports.
+* Adds TeX files.
+
+# utfpr 0.5.0
+
+* RMarkdown template to create reports.
 
 # utfpr 0.4.1
 
