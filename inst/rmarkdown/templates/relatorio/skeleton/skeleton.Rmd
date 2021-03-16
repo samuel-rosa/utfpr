@@ -4,8 +4,17 @@ author: "Qual é o seu Nome?"
 date: "`r Sys.Date()`"
 bibliography: biblio.bib
 csl: associacao-brasileira-de-normas-tecnicas.csl
-output: html_document
+output:
+  pdf_document:
+    toc: true
+    includes:
+      in_header: preamble.tex
 ---
+
+## Antes de começar...
+
+Familiarize-se com a sintaxe R/Markdown [@XieEtAl2020] e o motor knitr [@Xie2015] de geração de documentos dinâmicos no R [@RCoreTeam2020].
+
 
 ## Introdução
 
