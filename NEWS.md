@@ -1,3 +1,10 @@
+# utfpr 0.5.3
+
+* RMarkdown report template:
+  * Improved documentation
+  * Now using bookdown to link citations
+  * Not using fancy headers anymore
+
 # utfpr 0.5.2
 
 * Improves documentation of RMarkdown template to create reports.
