@@ -6,16 +6,23 @@ abstract: "Descreva brevemente o conteúdo de seu relatório de atividades. Desc
 
 # SOMENTE EDITE AS LINHAS ABAIXO SE TIVER CERTEZA DO QUE ESTÁ FAZENDO ##############################
 output:
-  pdf_document:
+  bookdown::pdf_document2:
     includes:
       in_header: tex/preamble.tex
 csl: bib/associacao-brasileira-de-normas-tecnicas.csl
 bibliography: bib/biblio.bib
+link-citations: true
 date: "`r Sys.Date()`"
+toc: false
 ---
 <!-- EDITE AS LINHAS ABAIXO CONFORME JULGAR NECESSÁRIO ##########################################-->
 
-## Antes de começar... 
+# Antes de começar... 
+
+Tenha certeza de que possui a versão mais atual do pacote utfpr instalado em seu computador:
+
+    if (!require(remotes)) install.packages(pkgs = "remotes")
+    remotes::install_github("samuel-rosa/utfpr")
 
 Familiarize-se com a sintaxe R/Markdown [@XieEtAl2020] e o motor knitr [@Xie2015] de geração de documentos dinâmicos no R [@RCoreTeam2020].
 
@@ -24,33 +31,35 @@ Você também deve instalar o TinyTeX, programa responsável pela geração da v
     install.packages("tinytex")
     tinytex::install_tinytex()
 
-## Introdução
+# Introdução
 
-Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório. Introduza o tema de seu relatório.
+A Introdução de um relatório, como o próprio nome já diz, _introduz_ o texto e seu conteúdo ao leitor. Ela precisa mostrar ao leitor qual foi o problema que levou à realização do trabalho relatado no documento. Isso requer alguma contextualização teórica, que deve ser sempre baseada na bibliografia técnico-científica existente. Requer também uma descrição precisa, mas sem entrar em muitos detalhes, do problema que se quer resolver. (Os detalhes ficam para a seção subsequente denominada "Material e Métodos".) Ao final da Introdução, devemos tentar explicitar qual é o objetivo do relatório, permitindo assim que o leitor tenha mais facilidade para compreender o que queremos alcançar.
 
+A estrutura da Introdução costuma ser bastante simples e um tanto similar entre diferentes relatórios. Em geral, o texto costuma ser relativamente curto, com cerca de 30-40 linhas e 3-4 parágrafos. Por isso, costuma-se evitar sua subdivisão em seções. O primeiro parágrafo geralmente trata de aspectos mais gerais de uma área do conhecimento na qual o trabalho está inserido. Ao fazer isso, costuma-se resgatar algumas referências bibliográficas mais importantes da área. Já o segundo parágrafo traz a atenção do leitor para o problema que se quer resolver dentro daquela área do conhecimento. Se o problema for bastante complexo e multifacetado, sua apresentação costuma ocupar também o terceiro parágrafo. Será no último (terceiro ou quarto) parágrafo que a solução que pretendemos avaliar é apresentada. Caso existam outras soluções na literatura, então faz-se uma breve argumentação das razões para não serem adotadas.
 
-## Material e Métodos
+Leia mais em [_A Introdução de um Artigo Científico_](http://dx.doi.org/10.5123/S1679-49742012000400017) [@Pereira2012]!
+
+# Material e Métodos
 
 Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade. Descreva o material e os métodos utilizados na atividade.
 
-
-## Resultados
+# Resultados
 
 Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade. Apresente os resultados obtidos na atividade.
 
 
-## Discussão
+# Discussão
 
 Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade. Discuta os resultados obtidos na atividade.
 
 
-## Conclusões
+# Conclusões
 
 * Liste as conclusões resultantes da atividade.
 * Liste as conclusões resultantes da atividade.
 * Liste as conclusões resultantes da atividade.
 
 
-## Referências
+# Referências
 
 Não se preocupe: sua lista de referências será gerada automaticamente!
